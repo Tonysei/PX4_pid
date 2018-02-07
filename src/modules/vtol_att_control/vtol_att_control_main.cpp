@@ -64,7 +64,7 @@ VtolAttitudeControl::VtolAttitudeControl()
 	_params.idle_pwm_mc = PWM_DEFAULT_MIN;
 	_params.vtol_motor_count = 0;
 
-	_params_handles.idle_pwm_mc = param_find("VT_IDLE_PWM_MC");
+	_params_handles.idle_pwm_mc = param_find("VT_IDLE_PWM_MC"); 
 	_params_handles.vtol_motor_count = param_find("VT_MOT_COUNT");
 	_params_handles.vtol_fw_permanent_stab = param_find("VT_FW_PERM_STAB");
 	_params_handles.fw_pitch_trim = param_find("VT_FW_PITCH_TRIM");

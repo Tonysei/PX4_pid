@@ -1002,8 +1002,18 @@ MulticopterAttitudeControl::control_attitude_rates(float dt)
 	/* angular rates error */
 	math::Vector<3> rates_err = _rates_sp - rates;
 
+	math::Vector<3> rates_err1;
+
+	rates_err1(0) = rates_err(0)*rates_err(0)*rates_err(0)*0.1f;
+	rates_err1(1) = rates_err(1)*rates_err(1)*rates_err(1)*0.1f;
+	rates_err1(2) = 0;
+
+
+
+
 	_att_control = rates_p_scaled.emult(rates_err) +
 		       _rates_int +
+		       rates_err1 +
 		       rates_d_scaled.emult(_rates_prev - rates) / dt +
 		       _params.rate_ff.emult(_rates_sp);
 

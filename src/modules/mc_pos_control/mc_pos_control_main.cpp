@@ -2550,7 +2550,22 @@ MulticopterPositionControl::calculate_thrust_setpoint()
 	}
 
 	/* velocity error */
-	math::Vector<3> vel_err = _vel_sp - _vel;
+	math::Vector<3> vel_err = (_vel_sp - _vel);
+    /*
+	math::Vector<3> vel_err;
+	vel_err(0) =  (_vel_sp(0) - _vel(0)) ;
+	vel_err(1) =  (_vel_sp(1) - _vel(1)) ;
+	vel_err(2) =  (_vel_sp(2) - _vel(2)) ;
+	*/
+
+	/*
+	math::Vector<3> vel_err1;
+	    vel_err1(0) =  (_vel_sp(0) - _vel(0))*(_vel_sp(0) - _vel(0))*(_vel_sp(0) - _vel(0))*0.0002f ;
+	    vel_err1(1) =  (_vel_sp(1) - _vel(1))*(_vel_sp(1) - _vel(1))*(_vel_sp(1) - _vel(1))*0.0002f ;
+	    vel_err1(2) =  (_vel_sp(2) - _vel(2));
+	*/
+
+
 
 	/* thrust vector in NED frame */
 	math::Vector<3> thrust_sp;
@@ -2560,8 +2575,11 @@ MulticopterPositionControl::calculate_thrust_setpoint()
 
 	} else {
 		thrust_sp = vel_err.emult(_params.vel_p) + _vel_err_d.emult(_params.vel_d)
-			    + _thrust_int - math::Vector<3>(0.0f, 0.0f, _params.thr_hover);
+			    + _thrust_int - math::Vector<3>(0.0f, 0.0f, _params.thr_hover)
+                //+ vel_err1
+			    ;
 	}
+
 
 	if (!_control_mode.flag_control_velocity_enabled && !_control_mode.flag_control_acceleration_enabled) {
 		thrust_sp(0) = 0.0f;

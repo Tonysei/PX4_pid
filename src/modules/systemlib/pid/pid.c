@@ -140,8 +140,11 @@ __EXPORT float pid_calculate(PID_t *pid, float sp, float val, float val_dot, flo
 		d = 0.0f;
 	}
 
-	/* calculate PD output */
-	float output = (error * pid->kp) + (d * pid->kd);
+	/* calculate PD output */;
+	//* 0.8f+ (error * error * error * pid->kp) * 0.0000000002f
+	// * 0.8f - (d * d * error * pid->kd) * 0.0000000002f
+	float output = (error * pid->kp)
+	             + (d * pid->kd);
 
 	if (pid->ki > SIGMA) {
 		// Calculate the error integral and check for saturation
